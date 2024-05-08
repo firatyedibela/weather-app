@@ -1,4 +1,5 @@
 import weatherAPI from './api.js';
+import { errorHandler } from './error.js';
 
 const domUI = (function () {
   function addListeners() {
@@ -15,29 +16,8 @@ const domUI = (function () {
     try {
       const data = await weatherAPI.get(location);
       console.log(data);
-      if (data.error) {
-        handleError(data.error.code);
-      } // If success
-      else {
-        // Remove error msg if there is any
-        const errorMsg = document.querySelector('.location-error');
-        if (errorMsg) {
-          errorMsg.remove();
-        }
-      }
     } catch (err) {
-      console.log(err);
-    }
-  }
-
-  function handleError(code) {
-    switch (code) {
-      case 1003:
-        renderErrorMessage('Please enter a location name.');
-        break;
-      case 1006:
-        renderErrorMessage('Location not found.');
-        break;
+      console.log('An error occured: ', err);
     }
   }
 
@@ -59,6 +39,7 @@ const domUI = (function () {
   }
 
   return {
+    renderErrorMessage,
     init,
   };
 })();
