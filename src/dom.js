@@ -14,8 +14,16 @@ const domUI = (function () {
 
     try {
       const data = await weatherAPI.get(location);
+      console.log(data);
       if (data.error) {
         handleError(data.error.code);
+      } // If success
+      else {
+        // Remove error msg if there is any
+        const errorMsg = document.querySelector('.location-error');
+        if (errorMsg) {
+          errorMsg.remove();
+        }
       }
     } catch (err) {
       console.log(err);
@@ -34,6 +42,7 @@ const domUI = (function () {
   }
 
   function renderErrorMessage(msg) {
+    // If an error rendered before, remove it first
     const prevError = document.querySelector('.location-error');
     if (prevError) {
       prevError.remove();
