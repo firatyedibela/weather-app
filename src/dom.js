@@ -1,8 +1,22 @@
 import weatherAPI from './api.js';
 import dayJPG from './assets/images/day2.jpg';
 import nightJPG from './assets/images/night.jpg';
+import { format, formatISO9075 } from 'date-fns';
 
 const domUI = (function () {
+  // Dynamically import icons
+  const dayIconsContext = require.context(
+    './assets/images/day',
+    false,
+    /\.png$/
+  );
+
+  const nightIconsContext = require.context(
+    './assets/images/night',
+    false,
+    /\.png$/
+  );
+
   function addListeners() {
     const form = document.querySelector('form');
     form.addEventListener('submit', handleSubmit);
@@ -34,7 +48,7 @@ const domUI = (function () {
       data
     );
     renderBackgroundImage(data);
-    // renderPrimaryContent(data.current);
+    renderPrimaryContent(data);
     // renderSecondaryContent();
     // renderForecast()
   }
