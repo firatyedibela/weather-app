@@ -97,6 +97,7 @@ const domUI = (function () {
   }
 
   function renderErrorMessage(msg) {
+    // If an error was rendered before, remove it first
     removeErrorMessage();
     const error = document.createElement('div');
     error.className = 'location-error';
@@ -105,7 +106,6 @@ const domUI = (function () {
   }
 
   function removeErrorMessage() {
-    // If an error rendered before, remove it first
     const prevError = document.querySelector('.location-error');
     if (prevError) {
       prevError.remove();
