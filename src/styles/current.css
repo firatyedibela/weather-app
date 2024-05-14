@@ -1,0 +1,129 @@
+#current-day-section {
+  width: 80%;
+  height: 50%;
+  color: white;
+  font-family: 'montserrat';
+}
+
+#current-day-section.day {
+  color: black;
+}
+
+#current-day-section.night {
+  color: white;
+}
+
+#current-day-section {
+  /* border: 2px solid black; */
+  display: flex;
+  gap: 5px;
+  padding: 12px;
+}
+
+#current-day-section > div {
+  /* border: 1px solid black; */
+  height: 100%;
+}
+
+#main-info-container {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-shadow: 2px 2px black;
+  letter-spacing: 1px;
+}
+
+#form-container {
+  flex: 1;
+}
+
+#main-info-container > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.main-info-header .main-info-icon-container {
+  width: 52px;
+  height: 52px;
+  margin-left: 0;
+}
+
+.main-info.main-info-header {
+  font-weight: bold;
+  font-size: 3.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-left,
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.main-info-icon-container {
+  width: 30px;
+  height: 30px;
+  margin-left: 35px;
+}
+
+.main-info {
+  font-size: 1.5rem;
+}
+
+.condition-icon {
+  width: 75px;
+  height: 75px;
+}
+
+.main-info-condition {
+  display: flex;
+  align-items: center;
+  font-size: 3.5rem;
+}
+
+.main-info-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.detailed-icon-container {
+  width: 40px;
+  height: 40px;
+}
+
+.detailed-icon {
+  width: 100%;
+  height: 100%;
+}
+
+#detailed-info-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding-top: 16px;
+}
+
+#detailed-info-container > div {
+  display: flex;
+  gap: 24px;
+  width: 240px;
+  color: black;
+  text-shadow: 1px 1px 5px white;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.data {
+  font-weight: 500;
+}

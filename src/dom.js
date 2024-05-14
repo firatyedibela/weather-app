@@ -2,21 +2,9 @@ import weatherAPI from './api.js';
 import dayJPG from './assets/images/day2.jpg';
 import nightJPG from './assets/images/night.jpg';
 import { format, formatISO9075 } from 'date-fns';
+import utils from './utils.js';
 
 const domUI = (function () {
-  // Dynamically import icons
-  const dayIconsContext = require.context(
-    './assets/images/day',
-    false,
-    /\.png$/
-  );
-
-  const nightIconsContext = require.context(
-    './assets/images/night',
-    false,
-    /\.png$/
-  );
-
   function addListeners() {
     const form = document.querySelector('form');
     form.addEventListener('submit', handleSubmit);
@@ -43,27 +31,56 @@ const domUI = (function () {
   }
 
   function renderContents(data) {
-    console.log(
-      'IM RENDERING CONTENTS, YOU WILL SEE A LOT OF WeATHER INFO ',
-      data
-    );
     renderBackgroundImage(data);
-    renderPrimaryContent(data);
-    // renderSecondaryContent();
+    renderMainWeather(data);
+    renderDetailedWeather(data);
     // renderForecast()
   }
 
   function renderBackgroundImage(data) {
-    const day = data.current.is_day;
-    if (day) {
+    if (data.current.is_day) {
       document.body.style.backgroundImage = `url(${dayJPG})`;
     } else {
       document.body.style.backgroundImage = `url(${nightJPG})`;
     }
   }
 
-  function renderPrimaryContent(data) {
-    console.log("HEY I GET PRIMARY CONTENT AND I'M RENDERING IT", data);
+  function renderMainWeather(data) {
+    const location = data.location.name;
+    const localTime = data.location.localtime;
+    const condition = data.current.condition.text;
+    const degree = parseInt(data.current.temp_c);
+
+    const date = format(new Date(localTime), 'PPPP');
+    const time = format(new Date(localTime), 'p');
+
+    document.querySelector('.main-info-location').textContent = location;
+    document.querySelector('.date').textContent = date;
+    document.querySelector('.time').textContent = time.toLocaleLowerCase();
+    document.querySelector('.temperature').innerHTML = `${degree} &degC`;
+    document.querySelector('.condition').textContent =
+      utils.capitalizeEachWord(condition);
+    document.querySelector('.condition-icon').src = data.current.condition.icon;
+  }
+
+  function renderDetailedWeather(data) {
+    const lastUpdated = data.current.last_updated;
+    const feelsLike = data.current.feelslike_c;
+    const humidity = data.current.humidity;
+    const windSpeed = data.current.wind_kph;
+    const rainChance = data.forecast.forecastday[0].day.daily_chance_of_rain;
+
+    const lastUpdatedDOM = document.querySelector('.data.last-updated');
+    const feelsLikeDODM = document.querySelector('.data.feels-like');
+    const humidityDOM = document.querySelector('.data.humidity');
+    const windSpeedDOM = document.querySelector('.data.wind-speed');
+    const rainChanceDOM = document.querySelector('.data.rain-chance');
+
+    lastUpdatedDOM.textContent = lastUpdated;
+    feelsLikeDODM.innerHTML = `${feelsLike} &degC`;
+    humidityDOM.textContent = `${humidity}%`;
+    windSpeedDOM.textContent = `${windSpeed} km/h`;
+    rainChanceDOM.textContent = `${rainChance}%`;
   }
 
   function renderErrorMessage(msg) {

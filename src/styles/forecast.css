@@ -1,0 +1,38 @@
+#forecast-section {
+  width: 80%;
+  height: 50%;
+}
+
+#forecast-section {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+#forecast-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  border: 1px solid black;
+}
+
+.forecast-days,
+.forecast-hours {
+  display: none;
+  border: 1px solid black;
+  flex: 10;
+}
+
+.forecast-active {
+  display: flex;
+  gap: 12px;
+}
+
+.forecast-days > div,
+.forecast-hours > div {
+  border: 1px solid black;
+  height: 100%;
+  flex: 1;
+}
