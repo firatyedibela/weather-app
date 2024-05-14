@@ -32,9 +32,22 @@ const domUI = (function () {
 
   function renderContents(data) {
     renderBackgroundImage(data);
+    setFontColor(data);
     renderMainWeather(data);
     renderDetailedWeather(data);
     // renderForecast()
+  }
+
+  function setFontColor(data) {
+    const day = data.current.is_day;
+    const detailedInfoContainer = document.querySelector(
+      '#detailed-info-container'
+    );
+    if (day) {
+      detailedInfoContainer.className = 'day';
+    } else {
+      detailedInfoContainer.className = 'night';
+    }
   }
 
   function renderBackgroundImage(data) {
