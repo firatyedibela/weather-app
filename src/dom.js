@@ -8,6 +8,14 @@ const domUI = (function () {
   function addListeners() {
     const form = document.querySelector('form');
     form.addEventListener('submit', handleSubmit);
+
+    const forecastBtns = document.querySelectorAll('.forecast-header-btn');
+    console.log(forecastBtns);
+    forecastBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        toggleActiveForecast(forecastBtns, e.target);
+      });
+    });
   }
 
   async function handleSubmit(e) {
@@ -36,6 +44,8 @@ const domUI = (function () {
     renderMainWeather(data);
     renderDetailedWeather(data);
     renderDailyForecast(data);
+
+    renderHourlyForecast(data);
   }
 
   function setFontColor(data) {
@@ -117,6 +127,20 @@ const domUI = (function () {
         </div>
       `;
       cont.innerHTML += HTML;
+    });
+  }
+
+  // function renderHourlyForecast(data) {
+  //   const hours = data.forecast.forecastday[0].hour;
+  // }
+
+  function toggleActiveForecast(buttons, target) {
+    buttons.forEach((btn) => {
+      if (btn.classList.contains('active')) {
+        btn.classList.remove('active');
+      }
+
+      target.classList.add('active');
     });
   }
 

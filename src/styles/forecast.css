@@ -49,13 +49,12 @@
   display: none;
 }
 
-#forecast-section > div.active {
+.forecast.active {
   display: flex;
   gap: 24px;
 }
 
-.forecast-days > div,
-.forecast-hours > div {
+.forecast-days > div {
   flex: 1;
   color: white;
   padding: 8px;
@@ -88,4 +87,24 @@
   font-size: 1.35rem;
   margin-bottom: 6px;
   font-weight: bold;
+}
+
+.slider {
+  overflow: hidden;
+  width: 100%;
+}
+
+.slides {
+  display: flex;
+}
+
+.slide {
+  display: flex;
+  min-width: 100%;
+  gap: 6px;
+}
+
+.hour {
+  flex: 1;
+  background: rgba(128, 128, 128, 0.44);
 }
