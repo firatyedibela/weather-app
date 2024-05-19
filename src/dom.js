@@ -35,7 +35,7 @@ const domUI = (function () {
     setFontColor(data);
     renderMainWeather(data);
     renderDetailedWeather(data);
-    // renderForecast()
+    renderDailyForecast(data);
   }
 
   function setFontColor(data) {
@@ -71,8 +71,6 @@ const domUI = (function () {
     document.querySelector('.date').textContent = date;
     document.querySelector('.time').textContent = time.toLocaleLowerCase();
     document.querySelector('.temperature').innerHTML = `${degree} &degC`;
-    document.querySelector('.condition').textContent =
-      utils.capitalizeEachWord(condition);
     document.querySelector('.condition-icon').src = data.current.condition.icon;
   }
 
@@ -94,6 +92,32 @@ const domUI = (function () {
     humidityDOM.textContent = `${humidity}%`;
     windSpeedDOM.textContent = `${windSpeed} km/h`;
     rainChanceDOM.textContent = `${rainChance}%`;
+  }
+
+  function renderDailyForecast(data) {
+    // 1- Get data
+    // 2- Create html for each day
+    // 3- Append that html to the forecast section
+    const sevenDays = data.forecast.forecastday;
+    const cont = document.querySelector('.forecast-days');
+    cont.innerHTML = '';
+    sevenDays.forEach((day, idx) => {
+      const dayOfWeek = format(day.date, 'EEEE');
+      const max = day.day.maxtemp_c;
+      const min = day.day.mintemp_c;
+
+      const HTML = `
+        <div class="day${idx} days">
+          <div class="day">${dayOfWeek}</div>
+          <div class="max">${parseInt(max)} &degC</div>
+          <div class="min">${parseInt(min)} &degC</div>
+          <div class="condition-logo">
+            <img src="${day.day.condition.icon}" alt="">
+          </div>
+        </div>
+      `;
+      cont.innerHTML += HTML;
+    });
   }
 
   function renderErrorMessage(msg) {

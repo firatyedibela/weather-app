@@ -1,38 +1,91 @@
 #forecast-section {
-  width: 80%;
-  height: 50%;
+  width: 90%;
+  flex: 1;
 }
 
 #forecast-section {
-  border: 2px solid black;
   display: flex;
   flex-direction: column;
+  gap: 18px;
   padding: 12px;
 }
 
 #forecast-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex: 1;
-  border: 1px solid black;
+  background-color: rgba(128, 128, 128, 0.514);
+  font-size: 1.4rem;
+  font-weight: 500;
+  border-radius: 2px;
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+#forecast-header > div {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  width: 100px;
+  padding: 8px;
+  transition: background-color 300ms;
+  letter-spacing: 1px;
+}
+
+#forecast-header > div:first-child {
+  border-radius: 2px 0 0 2px;
+  border-right: 1px solid rgb(171, 171, 171);
+}
+
+#forecast-header > div:hover {
+  background-color: rgba(0, 0, 0, 0.371);
+}
+
+#forecast-header > div.active {
+  background-color: rgba(0, 0, 0, 0.371);
 }
 
 .forecast-days,
 .forecast-hours {
   display: none;
-  border: 1px solid black;
-  flex: 10;
 }
 
-.forecast-active {
+#forecast-section > div.active {
   display: flex;
-  gap: 12px;
+  gap: 24px;
 }
 
 .forecast-days > div,
 .forecast-hours > div {
-  border: 1px solid black;
-  height: 100%;
   flex: 1;
+  color: white;
+  padding: 8px;
+  border-radius: 1px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(128, 128, 128, 0.44);
+}
+
+.day {
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 1.6rem;
+  padding: 0;
+  text-shadow: 2px 2px black;
+  margin-bottom: 8px;
+}
+
+.max,
+.min {
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px black;
+  margin-left: 4px;
+}
+
+.max {
+  font-size: 1.35rem;
+  margin-bottom: 6px;
+  font-weight: bold;
 }

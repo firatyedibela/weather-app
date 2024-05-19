@@ -13,6 +13,7 @@ body {
   position: relative;
   justify-content: center;
   align-items: center;
+  font-family: 'montserrat';
 
   background-size: cover;
   background-position: center;
@@ -34,8 +35,11 @@ input {
   border-radius: 6px;
   margin-left: 6px;
   height: 40px;
+
+  transition: opacity 150ms;
 }
 
+input:hover,
 input:focus {
   opacity: 1;
 }
@@ -61,5 +65,5 @@ input:focus {
 
 .location-error {
   margin-top: 8px;
-  margin-left: 41px;
+  margin-left: 42px;
 }

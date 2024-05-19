@@ -1,8 +1,7 @@
 #current-day-section {
-  width: 80%;
-  height: 50%;
+  width: 90%;
+  flex: 1;
   color: white;
-  font-family: 'montserrat';
 }
 
 #current-day-section.day {
@@ -54,13 +53,6 @@
   font-weight: bold;
   font-size: 3.5rem;
   display: flex;
-  justify-content: space-between;
-}
-
-.header-left,
-.header-left {
-  display: flex;
-  align-items: center;
 }
 
 .main-info-icon-container {
@@ -81,7 +73,7 @@
 .main-info-condition {
   display: flex;
   align-items: center;
-  font-size: 3.5rem;
+  font-size: 2.2rem;
 }
 
 .main-info-icon {
