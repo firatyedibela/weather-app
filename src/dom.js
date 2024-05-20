@@ -3,6 +3,7 @@ import dayJPG from './assets/images/day2.jpg';
 import nightJPG from './assets/images/night.jpg';
 import { format, formatISO9075 } from 'date-fns';
 import utils from './utils.js';
+import slider from './slider.js';
 
 const domUI = (function () {
   let weatherData = null;
@@ -12,7 +13,6 @@ const domUI = (function () {
     form.addEventListener('submit', handleSubmit);
 
     const forecastBtns = document.querySelectorAll('.forecast-header-btn');
-    console.log(forecastBtns);
     forecastBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         toggleActiveForecastButton(forecastBtns, e.target);
@@ -143,6 +143,14 @@ const domUI = (function () {
   }
 
   function renderHourlyForecast(data) {
+    // Remove previous data
+    const prevSlides = document.querySelectorAll('.slide');
+    if (prevSlides.length === 3) {
+      prevSlides.forEach((slide) => {
+        slide.remove();
+      });
+    }
+
     const hours = data.forecast.forecastday[0].hour;
     // Need 3 slides containing 8 hour items
     const hoursDivided = utils.divideArray(hours, 8);
@@ -150,11 +158,10 @@ const domUI = (function () {
     const slides = document.querySelector('.slides');
     hoursDivided.forEach((part, idx) => {
       const slideDiv = document.createElement('div');
-      slideDiv.className = `slide`;
+      slideDiv.className = 'slide';
       slideDiv.dataset.index = idx;
       part.forEach((hour) => {
         // Extract data
-        console.log(hour);
         const time = hour.time.split(' ')[1];
         const temperature = hour.temp_c;
         const icon = hour.condition.icon;
@@ -173,7 +180,7 @@ const domUI = (function () {
       slides.appendChild(slideDiv);
     });
     // Make first slide active
-    document.querySelector('[data-index = "0"]').classList.add('active');
+    slider.init();
   }
 
   function toggleActiveForecastButton(buttons, target) {

@@ -37,43 +37,38 @@
   flex: 1;
 }
 
-#main-info-container > div {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.main-info-header .main-info-icon-container {
-  width: 52px;
-  height: 52px;
-  margin-left: 0;
-}
-
 .main-info.main-info-header {
   font-weight: bold;
   font-size: 3.5rem;
   display: flex;
-}
-
-.main-info-icon-container {
-  width: 30px;
-  height: 30px;
-  margin-left: 35px;
+  gap: 16px;
 }
 
 .main-info {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.main-info-sub {
+  margin-left: 91px;
+}
+
+.main-info-temperature {
+  display: flex;
+}
+
+#current-day-section .temperature,
+#current-day-section .condition {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.temperature {
+  min-width: 170px;
 }
 
 .condition-icon {
   width: 75px;
   height: 75px;
-}
-
-.main-info-condition {
-  display: flex;
-  align-items: center;
-  font-size: 2.2rem;
 }
 
 .main-info-icon {

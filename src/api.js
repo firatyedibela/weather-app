@@ -12,7 +12,6 @@ const weatherAPI = (function () {
         errorHandler.handleError(data.error.code);
         throw new Error(data.error.message);
       } else {
-        console.log(data);
         return data;
       }
     } catch (err) {

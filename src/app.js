@@ -8,7 +8,7 @@ async function init() {
   domUI.init();
   let data;
   try {
-    data = await weatherAPI.get('los angeles');
+    data = await weatherAPI.get('ankara');
   } catch (err) {
     console.log('An error occured: ', err);
   }
