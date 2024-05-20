@@ -2,7 +2,7 @@ import { errorHandler } from './error.js';
 
 const weatherAPI = (function () {
   const URLForecast =
-    'http://api.weatherapi.com/v1/forecast.json?key=dd52c3dfc99546429a7162039242804&days=7&q=';
+    'https://api.weatherapi.com/v1/forecast.json?key=dd52c3dfc99546429a7162039242804&days=7&q=';
 
   async function get(location) {
     try {
