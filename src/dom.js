@@ -73,17 +73,20 @@ const domUI = (function () {
 
   function renderMainWeather(data) {
     const location = data.location.name;
-    const localTime = data.location.localtime;
+    const time = data.current.last_updated;
     const condition = data.current.condition.text;
     const degree = parseInt(data.current.temp_c);
 
-    const date = format(new Date(localTime), 'PPPP');
-    const time = format(new Date(localTime), 'p');
+    const date = format(new Date(time), 'PPPP');
+    const clock = time.split(' ')[1];
 
     document.querySelector('.main-info-location').textContent = location;
     document.querySelector('.date').textContent = date;
-    document.querySelector('.time').textContent = time.toLocaleLowerCase();
+    document.querySelector('.time').textContent = clock;
     document.querySelector('.temperature').innerHTML = `${degree} &degC`;
+    document.querySelector(
+      '.condition'
+    ).innerHTML = `${utils.capitalizeEachWord(condition)}`;
     document.querySelector('.condition-icon').src = data.current.condition.icon;
   }
 
@@ -141,7 +144,36 @@ const domUI = (function () {
 
   function renderHourlyForecast(data) {
     const hours = data.forecast.forecastday[0].hour;
-    hours.forEach((hour) => {});
+    // Need 3 slides containing 8 hour items
+    const hoursDivided = utils.divideArray(hours, 8);
+
+    const slides = document.querySelector('.slides');
+    hoursDivided.forEach((part, idx) => {
+      const slideDiv = document.createElement('div');
+      slideDiv.className = `slide`;
+      slideDiv.dataset.index = idx;
+      part.forEach((hour) => {
+        // Extract data
+        console.log(hour);
+        const time = hour.time.split(' ')[1];
+        const temperature = hour.temp_c;
+        const icon = hour.condition.icon;
+
+        // Create divs for hours and add them to the slideDiv
+        const hourHtml = `
+          <div class="hour">
+            <p class="time">${time}</p>
+            <p class="temperature">${temperature} &degC</p>
+            <img class="icon" src="${icon}" alt="">
+          </div>
+        `;
+
+        slideDiv.innerHTML += hourHtml;
+      });
+      slides.appendChild(slideDiv);
+    });
+    // Make first slide active
+    document.querySelector('[data-index = "0"]').classList.add('active');
   }
 
   function toggleActiveForecastButton(buttons, target) {
@@ -151,7 +183,6 @@ const domUI = (function () {
   }
 
   function toggleActiveForecastSection(type) {
-    console.log(type);
     const dailyForecastSection = document.querySelector('.forecast-days');
     const hourlyForecastSection = document.querySelector('.forecast-hours');
 
