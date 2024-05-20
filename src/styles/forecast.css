@@ -27,17 +27,13 @@
   cursor: pointer;
   width: 100px;
   padding: 8px;
-  transition: background-color 300ms;
+  transition: background-color 150ms;
   letter-spacing: 1px;
 }
 
 #forecast-header > div:first-child {
   border-radius: 2px 0 0 2px;
   border-right: 1px solid rgb(171, 171, 171);
-}
-
-#forecast-header > div:hover {
-  background-color: rgba(0, 0, 0, 0.371);
 }
 
 #forecast-header > div.active {

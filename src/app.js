@@ -6,7 +6,12 @@ import weatherAPI from './api.js';
 
 async function init() {
   domUI.init();
-  const data = await weatherAPI.get('los angeles');
+  let data;
+  try {
+    data = await weatherAPI.get('los angeles');
+  } catch (err) {
+    console.log('An error occured: ', err);
+  }
   domUI.renderContents(data);
 }
 

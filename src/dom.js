@@ -5,6 +5,8 @@ import { format, formatISO9075 } from 'date-fns';
 import utils from './utils.js';
 
 const domUI = (function () {
+  let weatherData = null;
+
   function addListeners() {
     const form = document.querySelector('form');
     form.addEventListener('submit', handleSubmit);
@@ -13,7 +15,8 @@ const domUI = (function () {
     console.log(forecastBtns);
     forecastBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
-        toggleActiveForecast(forecastBtns, e.target);
+        toggleActiveForecastButton(forecastBtns, e.target);
+        toggleActiveForecastSection(e.target.dataset.type);
       });
     });
   }
@@ -25,13 +28,15 @@ const domUI = (function () {
     const input = document.querySelector('#location');
     const location = input.value;
 
-    // Get data
+    // Get data and call render contents
     try {
-      const data = await weatherAPI.get(location);
-      if (data) {
+      weatherData = await weatherAPI.get(location);
+      if (weatherData) {
         input.value = '';
         removeErrorMessage();
-        renderContents(data);
+        renderContents(weatherData);
+      } else {
+        renderErrorMessage('No data found for the specified location.');
       }
     } catch (err) {
       console.log('An error occured: ', err);
@@ -43,9 +48,7 @@ const domUI = (function () {
     setFontColor(data);
     renderMainWeather(data);
     renderDetailedWeather(data);
-    renderDailyForecast(data);
-
-    renderHourlyForecast(data);
+    renderForecast(data);
   }
 
   function setFontColor(data) {
@@ -104,13 +107,19 @@ const domUI = (function () {
     rainChanceDOM.textContent = `${rainChance}%`;
   }
 
+  function renderForecast(data) {
+    renderDailyForecast(data);
+    renderHourlyForecast(data);
+  }
+
   function renderDailyForecast(data) {
     // 1- Get data
     // 2- Create html for each day
     // 3- Append that html to the forecast section
+    console.log(data);
     const sevenDays = data.forecast.forecastday;
-    const cont = document.querySelector('.forecast-days');
-    cont.innerHTML = '';
+    const container = document.querySelector('.forecast-days');
+    container.innerHTML = '';
     sevenDays.forEach((day, idx) => {
       const dayOfWeek = format(day.date, 'EEEE');
       const max = day.day.maxtemp_c;
@@ -126,22 +135,38 @@ const domUI = (function () {
           </div>
         </div>
       `;
-      cont.innerHTML += HTML;
+      container.innerHTML += HTML;
     });
   }
 
-  // function renderHourlyForecast(data) {
-  //   const hours = data.forecast.forecastday[0].hour;
-  // }
+  function renderHourlyForecast(data) {
+    const hours = data.forecast.forecastday[0].hour;
+    hours.forEach((hour) => {});
+  }
 
-  function toggleActiveForecast(buttons, target) {
+  function toggleActiveForecastButton(buttons, target) {
     buttons.forEach((btn) => {
-      if (btn.classList.contains('active')) {
-        btn.classList.remove('active');
-      }
-
-      target.classList.add('active');
+      btn.classList.toggle('active', btn === target);
     });
+  }
+
+  function toggleActiveForecastSection(type) {
+    console.log(type);
+    const dailyForecastSection = document.querySelector('.forecast-days');
+    const hourlyForecastSection = document.querySelector('.forecast-hours');
+
+    if (type === 'daily') {
+      // Make dailyForecast active
+      if (!dailyForecastSection.classList.contains('active')) {
+        dailyForecastSection.classList.add('active');
+        hourlyForecastSection.classList.remove('active');
+      }
+    } else if (type === 'hourly') {
+      if (!hourlyForecastSection.classList.contains('active')) {
+        hourlyForecastSection.classList.add('active');
+        dailyForecastSection.classList.remove('active');
+      }
+    }
   }
 
   function renderErrorMessage(msg) {
